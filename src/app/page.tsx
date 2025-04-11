@@ -1,103 +1,216 @@
-import Image from "next/image";
+"use client";
+import { MoreVertical, ChevronLast, ChevronFirst, Menu, X } from "lucide-react";
+import {
+  useContext,
+  createContext,
+  useState,
+  ReactNode,
+  FC,
+  useEffect,
+} from "react";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
-
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
-  );
+interface SidebarContextProps {
+  expanded: boolean;
 }
+
+const SidebarContext = createContext<SidebarContextProps>({ expanded: true });
+
+interface SidebarProps {
+  children: ReactNode;
+}
+
+const Sidebar: FC<SidebarProps> = ({ children }) => {
+  const [expanded, setExpanded] = useState<boolean>(true);
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+
+  // Prevent scrolling when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+  }, [mobileOpen]);
+
+  return (
+    <>
+      {/* Mobile menu button */}
+      <button
+        className="lg:hidden p-3 fixed top-4 left-4 z-50 bg-white rounded-md shadow-md"
+        onClick={() => setMobileOpen(true)}
+      >
+        <Menu />
+      </button>
+
+      {/* Overlay for mobile view */}
+      {mobileOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 z-40"
+          onClick={() => setMobileOpen(false)}
+        />
+      )}
+
+      <aside
+        className={`fixed lg:relative z-50 h-screen transition-all duration-300 ${
+          mobileOpen ? "left-0" : "-left-full"
+        } lg:left-0`}
+      >
+        <nav className="h-full flex flex-col bg-white border-r shadow-sm w-64">
+          <div className="p-4 pb-2 flex justify-between items-center">
+            <img
+              src="https://img.logoipsum.com/243.svg"
+              className={`overflow-hidden transition-all ${
+                expanded ? "w-32" : "w-0"
+              }`}
+              alt="Logo"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={() => setExpanded((curr) => !curr)}
+                className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 hidden lg:block"
+              >
+                {expanded ? <ChevronFirst /> : <ChevronLast />}
+              </button>
+              <button
+                onClick={() => setMobileOpen(false)}
+                className="p-1.5 rounded-lg bg-gray-50 hover:bg-gray-100 lg:hidden"
+              >
+                <X />
+              </button>
+            </div>
+          </div>
+
+          <SidebarContext.Provider value={{ expanded }}>
+            <ul className="flex-1 px-3">
+              <li
+                className={`
+        relative flex items-center py-2 px-3 my-1
+        font-medium rounded-md cursor-pointer
+        transition-colors group
+        hover:bg-indigo-50 text-gray-600
+      `}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 text-gray-500"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m4 0v10a1 1 0 01-1 1H5a1 1 0 01-1-1V12h16z"
+                  />
+                </svg>
+                <span
+                  className={`overflow-hidden transition-all ${
+                    expanded ? "w-52 ml-3" : "w-0"
+                  }`}
+                >
+                  Dashboard
+                </span>
+
+                {!expanded && (
+                  <div
+                    className={`
+            absolute left-full rounded-md px-2 py-1 ml-6
+            bg-indigo-100 text-indigo-800 text-sm
+            invisible opacity-0 -translate-x-3 transition-all
+            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
+          `}
+                  >
+                    Dashboard
+                  </div>
+                )}
+              </li>
+            </ul>
+          </SidebarContext.Provider>
+
+          <div className="border-t flex p-3">
+            <img
+              src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
+              alt="User Avatar"
+              className="w-10 h-10 rounded-md"
+            />
+            <div
+              className={`
+                flex justify-between items-center
+                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
+            `}
+            >
+              <div className="leading-4">
+                <h4 className="font-semibold">John Doe</h4>
+                <span className="text-xs text-gray-600">johndoe@gmail.com</span>
+              </div>
+              <MoreVertical size={20} />
+            </div>
+          </div>
+        </nav>
+      </aside>
+    </>
+  );
+};
+
+export default Sidebar;
+
+interface SidebarItemProps {
+  icon: ReactNode;
+  text: string;
+  active?: boolean;
+  alert?: boolean;
+}
+
+export const SidebarItem: FC<SidebarItemProps> = ({
+  icon,
+  text,
+  active = false,
+  alert = false,
+}) => {
+  const { expanded } = useContext(SidebarContext);
+
+  return (
+    <li
+      className={`
+        relative flex items-center py-2 px-3 my-1
+        font-medium rounded-md cursor-pointer
+        transition-colors group
+        ${
+          active
+            ? "bg-gradient-to-tr from-indigo-200 to-indigo-100 text-indigo-800"
+            : "hover:bg-indigo-50 text-gray-600"
+        }
+    `}
+    >
+      {icon}
+      <span
+        className={`overflow-hidden transition-all ${
+          expanded ? "w-52 ml-3" : "w-0"
+        }`}
+      >
+        {text}
+      </span>
+      {alert && (
+        <div
+          className={`absolute right-2 w-2 h-2 rounded bg-indigo-400 ${
+            expanded ? "" : "top-2"
+          }`}
+        />
+      )}
+
+      {!expanded && (
+        <div
+          className={`
+          absolute left-full rounded-md px-2 py-1 ml-6
+          bg-indigo-100 text-indigo-800 text-sm
+          invisible opacity-20 -translate-x-3 transition-all
+          group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
+      `}
+        >
+          {text}
+        </div>
+      )}
+    </li>
+  );
+};
