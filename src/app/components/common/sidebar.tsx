@@ -67,6 +67,8 @@ const Sidebar = ({}) => {
               className={`overflow-hidden transition-all ${
                 expanded ? "w-32" : "w-0"
               }`}
+              width={100}
+              height={100}
               alt="Logo"
             />
             <div className="flex gap-2">
@@ -120,6 +122,13 @@ const Sidebar = ({}) => {
                 <SidebarItem
                   icon={<Settings className="h-5 w-5 text-gray-500" />}
                   text="Settings"
+                />
+              </Link>
+
+              <Link href="/add-message">
+                <SidebarItem
+                  icon={<MessageCircle className="h-5 w-5 text-gray-500" />}
+                  text="Add Message"
                 />
               </Link>
             </ul>
