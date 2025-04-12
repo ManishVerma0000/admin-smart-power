@@ -1,5 +1,14 @@
 "use client";
-import { MoreVertical, ChevronLast, ChevronFirst, Menu, X } from "lucide-react";
+import {
+  MoreVertical,
+  ChevronLast,
+  ChevronFirst,
+  Menu,
+  X,
+  MessageCircle,
+  Settings,
+} from "lucide-react";
+import Link from "next/link";
 import {
   useContext,
   createContext,
@@ -15,11 +24,7 @@ interface SidebarContextProps {
 
 const SidebarContext = createContext<SidebarContextProps>({ expanded: true });
 
-interface SidebarProps {
-  children: ReactNode;
-}
-
-const Sidebar: FC<SidebarProps> = ({ children }) => {
+const Sidebar = ({}) => {
   const [expanded, setExpanded] = useState<boolean>(true);
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
 
@@ -82,71 +87,43 @@ const Sidebar: FC<SidebarProps> = ({ children }) => {
 
           <SidebarContext.Provider value={{ expanded }}>
             <ul className="flex-1 px-3">
-              <li
-                className={`
-        relative flex items-center py-2 px-3 my-1
-        font-medium rounded-md cursor-pointer
-        transition-colors group
-        hover:bg-indigo-50 text-gray-600
-      `}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth={2}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m4 0v10a1 1 0 01-1 1H5a1 1 0 01-1-1V12h16z"
-                  />
-                </svg>
-                <span
-                  className={`overflow-hidden transition-all ${
-                    expanded ? "w-52 ml-3" : "w-0"
-                  }`}
-                >
-                  Dashboard
-                </span>
+              <Link href="/dashboard">
+                <SidebarItem
+                  icon={
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5 text-gray-500"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      strokeWidth={2}
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M3 12l2-2m0 0l7-7 7 7M13 5v6h6m4 0v10a1 1 0 01-1 1H5a1 1 0 01-1-1V12h16z"
+                      />
+                    </svg>
+                  }
+                  text="Dashboard"
+                />
+              </Link>
 
-                {!expanded && (
-                  <div
-                    className={`
-            absolute left-full rounded-md px-2 py-1 ml-6
-            bg-indigo-100 text-indigo-800 text-sm
-            invisible opacity-0 -translate-x-3 transition-all
-            group-hover:visible group-hover:opacity-100 group-hover:translate-x-0
-          `}
-                  >
-                    Dashboard
-                  </div>
-                )}
-              </li>
+              <Link href="/messages">
+                <SidebarItem
+                  icon={<MessageCircle className="h-5 w-5 text-gray-500" />}
+                  text="Messages"
+                />
+              </Link>
+
+              <Link href="/settings">
+                <SidebarItem
+                  icon={<Settings className="h-5 w-5 text-gray-500" />}
+                  text="Settings"
+                />
+              </Link>
             </ul>
           </SidebarContext.Provider>
-
-          <div className="border-t flex p-3">
-            <img
-              src="https://ui-avatars.com/api/?background=c7d2fe&color=3730a3&bold=true"
-              alt="User Avatar"
-              className="w-10 h-10 rounded-md"
-            />
-            <div
-              className={`
-                flex justify-between items-center
-                overflow-hidden transition-all ${expanded ? "w-52 ml-3" : "w-0"}
-            `}
-            >
-              <div className="leading-4">
-                <h4 className="font-semibold">John Doe</h4>
-                <span className="text-xs text-gray-600">johndoe@gmail.com</span>
-              </div>
-              <MoreVertical size={20} />
-            </div>
-          </div>
         </nav>
       </aside>
     </>
