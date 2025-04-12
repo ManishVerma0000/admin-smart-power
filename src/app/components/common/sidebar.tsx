@@ -1,6 +1,5 @@
 "use client";
 import {
-  MoreVertical,
   ChevronLast,
   ChevronFirst,
   Menu,
@@ -8,6 +7,7 @@ import {
   MessageCircle,
   Settings,
 } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import {
   useContext,
@@ -62,7 +62,7 @@ const Sidebar = ({}) => {
       >
         <nav className="h-full flex flex-col bg-white border-r shadow-sm w-64">
           <div className="p-4 pb-2 flex justify-between items-center">
-            <img
+            <Image
               src="https://img.logoipsum.com/243.svg"
               className={`overflow-hidden transition-all ${
                 expanded ? "w-32" : "w-0"

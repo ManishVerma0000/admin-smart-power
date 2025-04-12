@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 export default function Login() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md bg-white rounded-xl shadow-md overflow-hidden md:flex md:max-w-2xl">
         {/* Left Image (Hidden on small screens) */}
         <div className="w-full md:w-1/2">
-          <img
+          <Image
             src="app_icon_1024.png"
             alt="login visual"
             className="h-40 md:h-full w-full object-cover"
