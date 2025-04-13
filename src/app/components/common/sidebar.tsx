@@ -61,14 +61,14 @@ const Sidebar = ({}) => {
         } lg:left-0`}
       >
         <nav className="h-full flex flex-col bg-white border-r shadow-sm w-64">
-          <div className="p-4 pb-2 flex justify-between items-center">
+          <div className=" pb-2 flex justify-between items-center">
             <Image
-              src="https://img.logoipsum.com/243.svg"
+              src="/app_icon_1024.png"
               className={`overflow-hidden transition-all ${
-                expanded ? "w-32" : "w-0"
+                expanded ? "w-32 h-30" : "w-0"
               }`}
-              width={100}
-              height={100}
+              width={50}
+              height={50}
               alt="Logo"
             />
             <div className="flex gap-2">
@@ -111,10 +111,17 @@ const Sidebar = ({}) => {
                 />
               </Link>
 
-              <Link href="/messages">
+              <Link href="/time-table">
                 <SidebarItem
                   icon={<MessageCircle className="h-5 w-5 text-gray-500" />}
-                  text="Messages"
+                  text="Add Time Table"
+                />
+              </Link>
+
+              <Link href="/notifications">
+                <SidebarItem
+                  icon={<MessageCircle className="h-5 w-5 text-gray-500" />}
+                  text="Notifications"
                 />
               </Link>
 

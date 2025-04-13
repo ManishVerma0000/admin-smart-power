@@ -1,9 +1,11 @@
+"use client";
+import useUserStore from "@/store/useUserStore";
 import React from "react";
 
 const InputSelectBox = () => {
+  const { user } = useUserStore();
   return (
-    <div className="w-full max-w-sm mx-auto p-4 bg-white rounded-2xl shadow space-y-4 mt-12">
-
+    <div className="w-full max-w-sm mx-auto p-4 bg-white rounded-2xl shadow space-y-4">
       {/* Name */}
       <div className="flex flex-col space-y-1">
         <label htmlFor="name" className="text-sm text-gray-600">
@@ -39,9 +41,15 @@ const InputSelectBox = () => {
           className="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           <option value="">Select Line</option>
-          <option value="admin">Admin</option>
-          <option value="user">User</option>
-          <option value="guest">Guest</option>
+          {user?.line.map((lines: string, index: number) => {
+            return (
+              <>
+                <option key={index + 1} value={lines}>
+                  {lines}
+                </option>
+              </>
+            );
+          })}
         </select>
       </div>
 
