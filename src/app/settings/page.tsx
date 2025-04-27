@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 interface UserProfileProps {
-  name: string;
+
   email: string;
   phone: string;
   line: string;
@@ -11,18 +11,14 @@ interface UserProfileProps {
 }
 
 const UserProfile: React.FC<UserProfileProps> = ({
-  name,
+
   email,
   phone,
   line,
   lines,
   imageUrl,
 }) => {
-  const initials = name
-    ?.split(" ")
-    ?.map((n) => n[0])
-    ?.join("")
-    ?.toUpperCase();
+  
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
@@ -39,7 +35,7 @@ const UserProfile: React.FC<UserProfileProps> = ({
             </div>
           ) : (
             <div className="w-20 h-20 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-2xl font-bold border-4 border-blue-500">
-              {initials}
+             Mr.
             </div>
           )}
 
