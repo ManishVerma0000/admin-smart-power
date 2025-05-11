@@ -31,6 +31,7 @@ export default function Login() {
       setError(err?.response?.data?.message || "Login failed");
       console.error("Login error:", err);
     }
+    console.log(response,'response')
   };
 
   return (

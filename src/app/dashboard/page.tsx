@@ -1,8 +1,7 @@
 "use client";
 import useUserStore from "@/store/useUserStore";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
-import DonutBreakdownChart from "../components/charts/DonutBreakdownChart";
+
 
 const staticData = [
   {
@@ -27,7 +26,6 @@ const staticData = [
 // app/dashboard/page.tsx
 export default function DashboardPage() {
   const { user } = useUserStore();
-  const router = useRouter();
   useEffect(() => {
     // if (!user) {
     //   router.push("/login");

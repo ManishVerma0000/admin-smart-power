@@ -1,7 +1,6 @@
 "use client";
 import useUserStore from "@/store/useUserStore";
 import React, { useState } from "react";
-import axios from "axios";
 import api from "../api/api";
 
 const InputSelectBox = () => {
